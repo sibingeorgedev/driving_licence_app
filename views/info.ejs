@@ -3,158 +3,94 @@
 
 <%- include('layouts/header'); -%>
 
-<body>
-    <!-- Responsive navbar-->
-    <%- include('layouts/navbar'); -%>
-    <!-- Page content-->
-    <div class="container padding_30">
-        <div id="fetchedDataContainer" class="styled-container">
-            <div class="back-button">
-                <a href="/g">Back to Search</a>
+    <body>
+        <!-- Responsive navbar-->
+        <%- include('layouts/navbar'); -%>
+            <!-- Page content-->
+            <div class="container padding_30">
+                <div id="fetchedDataContainer" class="styled-container">
+                    <div class="back-button">
+                        <a href="/g" class="btn btn-outline-primary">Back to Search</a>
+                    </div>
+                    <% if (data) { %>
+                        <h2 class="section-title">Information Related to the License Number:
+                            <strong>
+                                <%= data.licenseNumber %>
+                            </strong>
+                        </h2>
+                        <section class="info-section">
+                            <h3>Personal Information</h3>
+                            <div class="info-item">
+                                <label for="firstName">First Name:</label>
+                                <span class="info-value">
+                                    <%= data.firstName %>
+                                </span>
+                            </div>
+
+                            <div class="info-item">
+                                <label for="lastName">Last Name:</label>
+                                <span class="info-value">
+                                    <%= data.lastName %>
+                                </span>
+                            </div>
+
+                            <div class="info-item">
+                                <label for="licenseNumber">License Number:</label>
+                                <span class="info-value">
+                                    <%= data.licenseNumber %>
+                                </span>
+                            </div>
+
+                            <div class="info-item">
+                                <label for="age">Age:</label>
+                                <span class="info-value">
+                                    <%= data.age %>
+                                </span>
+                            </div>
+                        </section>
+
+                        <section class="info-section">
+                            <h3>Car Information</h3>
+                            <div class="info-item">
+                                <label for="make">Make:</label>
+                                <span id="makeValue" class="info-value">
+                                    <%= data.car_details.make %>
+                                </span>
+                            </div>
+
+                            <div class="info-item">
+                                <label for="model">Model:</label>
+                                <span id="modelValue" class="info-value">
+                                    <%= data.car_details.model %>
+                                </span>
+                            </div>
+
+                            <div class="info-item">
+                                <label for="year">Year:</label>
+                                <span id="yearValue" class="info-value">
+                                    <%= data.car_details.year %>
+                                </span>
+                            </div>
+
+                            <div class="info-item">
+                                <label for="platNumber">Plate Number:</label>
+                                <span id="platNumberValue" class="info-value">
+                                    <%= data.car_details.platNumber %>
+                                </span>
+                            </div>
+
+                            <!-- Common Edit and Cancel Buttons -->
+                            <button onclick="enableEditMode()">Edit</button>
+                            <button onclick="cancelEditMode()">Cancel</button>
+                        </section>
+                        <% } else { %>
+                            <p>No data available</p>
+                            <a href="/g2">Go back to G2 page</a>
+                            <% } %>
+                </div>
             </div>
-            <% if (data) { %>
-                <h2 class="section-title">Fetched Data</h2>
-                <section class="info-section">
-                    <h3>Personal Information</h3>
-                    <div class="info-item">
-                        <label for="firstName">First Name:</label>
-                        <span class="info-value"><%= data.firstName %></span>
-                    </div>
 
-                    <div class="info-item">
-                        <label for="lastName">Last Name:</label>
-                        <span class="info-value"><%= data.lastName %></span>
-                    </div>
-
-                    <div class="info-item">
-                        <label for="licenseNumber">License Number:</label>
-                        <span class="info-value"><%= data.licenseNumber %></span>
-                    </div>
-
-                    <div class="info-item">
-                        <label for="age">Age:</label>
-                        <span class="info-value"><%= data.age %></span>
-                    </div>
-                </section>
-
-                <section class="info-section">
-                    <h3>Car Information</h3>
-                    <div class="info-item">
-                        <label for="make">Make:</label>
-                        <span id="makeValue" class="info-value"><%= data.car_details.make %></span>
-                    </div>
-
-                    <div class="info-item">
-                        <label for="model">Model:</label>
-                        <span id="modelValue" class="info-value"><%= data.car_details.model %></span>
-                    </div>
-
-                    <div class="info-item">
-                        <label for="year">Year:</label>
-                        <span id="yearValue" class="info-value"><%= data.car_details.year %></span>
-                    </div>
-
-                    <div class="info-item">
-                        <label for="platNumber">Plate Number:</label>
-                        <span id="platNumberValue" class="info-value"><%= data.car_details.platNumber %></span>
-                    </div>
-
-                    <!-- Common Edit and Cancel Buttons -->
-                    <button onclick="enableEditMode()">Edit</button>
-                    <button onclick="cancelEditMode()">Cancel</button>
-                </section>
-            <% } else { %>
-                <p>No data available</p>
-                <a href="/g2">Go back to G2 page</a>
-            <% } %>
-        </div>
-    </div>
-
-    <script>
-        let originalValues = {};
-
-        function enableEditMode() {
-            // Save original values before entering edit mode
-            originalValues = {
-                make: document.getElementById('makeValue').innerText,
-                model: document.getElementById('modelValue').innerText,
-                year: document.getElementById('yearValue').innerText,
-                platNumber: document.getElementById('platNumberValue').innerText,
-            };
-
-            // Enable edit mode for all fields
-            enableFieldEditMode('make');
-            enableFieldEditMode('model');
-            enableFieldEditMode('year');
-            enableFieldEditMode('platNumber');
-
-            // Change "Edit" button to "Save" and add "Cancel" button
-            const editButton = document.querySelector('button[onclick="enableEditMode()"]');
-            editButton.innerText = 'Save';
-            editButton.onclick = function () {
-                saveChanges();
-            };
-
-            const cancelButton = document.querySelector('button[onclick="cancelEditMode()"]');
-            cancelButton.style.display = 'inline-block';
-        }
-
-        function enableFieldEditMode(field) {
-            const valueSpan = document.getElementById(`${field}Value`);
-
-            // Enable edit mode by replacing the span with an input field
-            const inputField = document.createElement('input');
-            inputField.type = 'text';
-            inputField.value = valueSpan.innerText;
-            inputField.id = `${field}Input`;
-
-            valueSpan.replaceWith(inputField);
-        }
-
-        function saveChanges() {
-            // Save changes to the server or perform necessary actions
-
-            // Change "Save" button back to "Edit" and hide "Cancel" button
-            const editButton = document.querySelector('button[onclick="enableEditMode()"]');
-            editButton.innerText = 'Edit';
-            editButton.onclick = function () {
-                enableEditMode();
-            };
-
-            const cancelButton = document.querySelector('button[onclick="cancelEditMode()"]');
-            cancelButton.style.display = 'none';
-        }
-
-        function cancelEditMode() {
-            // Restore original values and exit edit mode for all fields
-            restoreOriginalValue('make');
-            restoreOriginalValue('model');
-            restoreOriginalValue('year');
-            restoreOriginalValue('platNumber');
-
-            // Change "Save" button back to "Edit" and hide "Cancel" button
-            const editButton = document.querySelector('button[onclick="enableEditMode()"]');
-            editButton.innerText = 'Edit';
-            editButton.onclick = function () {
-                enableEditMode();
-            };
-
-            const cancelButton = document.querySelector('button[onclick="cancelEditMode()"]');
-            cancelButton.style.display = 'none';
-        }
-
-        function restoreOriginalValue(field) {
-            const inputField = document.getElementById(`${field}Input`);
-            const valueSpan = document.createElement('span');
-            valueSpan.className = 'info-value';
-            valueSpan.id = `${field}Value`;
-            valueSpan.innerText = originalValues[field];
-
-            inputField.replaceWith(valueSpan);
-        }
-    </script>
-
-    <%- include('layouts/scripts'); -%>
-</body>
+            <script src="/js/info.js"></script>
+    </body>
 
 </html>
