@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose') // imports mongoose
+const Schema = mongoose.Schema; // creates a new instance of a Schema
 
 const InfoSchema = new Schema({
     firstName: String,
@@ -14,5 +14,5 @@ const InfoSchema = new Schema({
     }
 });
 
-const Info = mongoose.model('Info', InfoSchema);
-module.exports = Info
+const Info = mongoose.model('Info', InfoSchema); // creates a new model from the schema
+module.exports = Info // exports the model

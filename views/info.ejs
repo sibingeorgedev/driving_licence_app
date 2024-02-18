@@ -84,12 +84,15 @@
                             <button onclick="cancelEditMode()">Cancel</button>
                         </section>
                         <% } else { %>
-                            <p>No data available</p>
+                            <p>No User Found</p>
                             <a href="/g2">Go back to G2 page</a>
                             <% } %>
                 </div>
             </div>
 
+            <script>
+                const data = <%- JSON.stringify(data) %>; // pass data from the html to the script
+            </script>
             <script src="/js/info.js"></script>
     </body>
 

@@ -31,15 +31,9 @@ app.post('/g/fetchData', async (req, res) => {
     // query MongoDB based on the license number
     const data = await info.findOne({ licenseNumber });
 
-    // render a view or send the result as JSON back to the client
-    if (data) {
-      console.log(data);
-      // if data is found, render a view or send it as JSON
-      res.render('info', { data });
-    } else {
-      // if no data is found, handle accordingly
-      res.render('notFound');
-    }
+    // if data is found, render a view or send it as JSON
+    res.render('info', { data });
+
   } catch (error) { // handle any errors
     console.error('Error fetching data from MongoDB:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -70,5 +64,25 @@ app.post('/g2/info', async (req, res) => {
   catch (error) {
     console.log(error);
   }
-  res.redirect('/');
+  res.render('g2');
 })
+
+// creates a route that updates data in MongoDB
+app.post('/g/updateData', async (req, res) => {
+  try {
+    const licenseNumber = req.body.licenseNumber; // get the license number from the request body
+    const newData = req.body; // get the new data from the request body
+
+    delete newData._id; // delete the _id property from the new data
+
+    await info.updateOne({ licenseNumber: licenseNumber }, newData); // update the data in MongoDB
+    
+    const data = await info.findOne({ licenseNumber }); // query MongoDB based on the license number
+
+    res.json(data); // send the updated data as JSON
+
+  } catch (error) { // handle any errors
+    console.error('Error fetching data from MongoDB:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
