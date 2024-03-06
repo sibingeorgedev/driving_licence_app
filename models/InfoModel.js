@@ -3,13 +3,13 @@ const Schema = mongoose.Schema; // creates a new instance of a Schema
 const bcrypt = require('bcrypt') // imports bcrypt module
 
 const InfoSchema = new Schema({
-    firstName: { type: String, default: '' }, // Default value is an empty string
+    firstName: { type: String, default: '' },
     lastName: { type: String, default: '' },
     licenseNumber: { type: String, default: '' },
-    age: { type: Number, default: 0 }, // Default value is 0
+    age: { type: Number, default: 0 }, 
     userName: { type: String, default: '' },
     password: { type: String, default: '' },
-    userType: { type: String, default: 'Driver' }, // Default value is 'Driver'
+    userType: { type: String, default: 'Driver' },
     car_details: {
         make: { type: String, default: '' },
         model: { type: String, default: '' },

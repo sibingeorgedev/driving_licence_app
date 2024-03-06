@@ -1,10 +1,9 @@
 const info = require('../models/InfoModel.js') // imports Info model
 
 module.exports = async (req, res) => {
-    console.log(req.body)
     try {
         await info.create(req.body)
-        res.redirect('/')
+        res.status(200).send("User created successfully");
     }
 
     catch (error) {

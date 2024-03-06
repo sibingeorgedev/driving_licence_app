@@ -3,6 +3,19 @@ document.getElementById("signupLink").addEventListener("click", function (event)
     $('#signupModal').modal('show');
 });
 
+$(document).ready(function () {
+    if (showModal) {
+        $('#signupModal').modal('show');
+    }
+});
+
+$(document).ready(function () {
+    if (showErrorModal) {
+        document.getElementById("errorMessage").innerText = "Invalid username or password. Please try again.";
+        $('#errorModal').modal('show');
+    }
+});
+
 document.getElementById("signupForm").addEventListener("submit", function (event) {
     event.preventDefault();
     // validate form fields
@@ -15,7 +28,7 @@ document.getElementById("signupForm").addEventListener("submit", function (event
         // display error message in modal
         document.getElementById("errorMessage").innerText = "Passwords do not match. Please try again.";
         $('#errorModal').modal('show');
-        return; // Prevent further execution of the form submission
+        return; // prevent further execution of the form submission
     }
 
     // Send signup data to backend for processing
@@ -32,10 +45,11 @@ document.getElementById("signupForm").addEventListener("submit", function (event
     })
         .then(response => {
             if (response.ok) {
-                // If response is successful, redirect to another page
-                window.location.href = '/'; // Replace '/redirect-url' with your desired URL
+                console.log('User signed up successfully');
+                // if response is successful, redirect to home page
+                window.location.href = '/login';
             } else {
-                // If response is not successful, handle the error
+                // if response is not successful, handle the error
                 throw new Error('Failed to sign up');
             }
         })

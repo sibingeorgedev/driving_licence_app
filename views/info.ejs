@@ -9,9 +9,10 @@
             <!-- Page content-->
             <div class="container padding_30">
                 <div id="fetchedDataContainer" class="styled-container">
-                    <div class="back-button">
+                    <!-- <div class="back-button">
                         <a href="/g" class="btn btn-outline-primary">Back to Search</a>
-                    </div>
+                    </div> -->
+                    <% var data = typeof data !== 'undefined' ? data : {}; %>
                     <% if (data) { %>
                         <h2 class="section-title">Information Related to the License Number:
                             <strong>

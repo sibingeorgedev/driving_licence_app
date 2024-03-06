@@ -1,15 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include('layouts/header'); -%>
-    <body>
-        <!-- Responsive navbar-->
-        <%- include('layouts/navbar'); -%>
-        <!-- Page content-->
-        <div class="container">
-            <div class="text-center mt-5">
-                <h1>Welcome to the Home Page</h1>
+<%- include('layouts/header'); -%>
+<body>
+    <!-- Responsive navbar-->
+    <%- include('layouts/navbar'); -%>
+    <!-- Page content-->
+    <div class="container mt-5">
+        <!-- Jumbotron with welcome message and image -->
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container text-center">
+                <img src="/public/images/driving.jpg" class="img-fluid rounded-circle mb-3" alt="Driving Test Image" style="width: 200px;">
+                <h1 class="display-4">Welcome to the Driving Test Booking Portal</h1>
+                <p class="lead">Book your driving test with ease and convenience!</p>
             </div>
         </div>
-        <%- include('layouts/scripts'); -%>
-    </body>
+
+        <!-- Information cards -->
+        <div class="row">
+            <!-- Card for booking driving test -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-lg rounded">
+                    <img src="/images/book-driving-test.jpg" class="card-img-top" alt="Book Driving Test Image">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">Book a Driving Test</h2>
+                        <p class="card-text">Schedule your driving test appointment online.</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="/booking" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card for practice tests -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-lg rounded">
+                    <img src="/images/practice-tests.jpg" class="card-img-top" alt="Practice Tests Image">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">Practice Tests</h2>
+                        <p class="card-text">Prepare for your driving test with our practice tests.</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="/practice-tests" class="btn btn-primary">Start Practice</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card for driving tips -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-lg rounded">
+                    <img src="/images/driving-tips.jpg" class="card-img-top" alt="Driving Tips Image">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">Driving Tips</h2>
+                        <p class="card-text">Read helpful driving tips and advice from experts.</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="/driving-tips" class="btn btn-primary">View Tips</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('layouts/scripts'); -%>
+</body>
 </html>
