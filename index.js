@@ -5,13 +5,13 @@ const expressSession = require('express-session'); // imports express-session mo
 
 const app = express() // calls express function to start new Express app
 
+const authenticateDriverMiddleware = require('./middleware/authenticateDriver.js')
 const redirectIfAuthenticatedMiddleware = require('./middleware/redirectIfAuthenticatedMiddleware')
 
 const homeController = require('./controllers/home.js')
 const gController = require('./controllers/g.js')
 const g2Controller = require('./controllers/g2.js')
 const loginController = require('./controllers/login.js')
-const licenseController = require('./controllers/getLicenseData.js')
 const newInfoController = require('./controllers/newInfo.js')
 const updateLicenseDataController = require('./controllers/updateLicenseData.js')
 const registerController = require('./controllers/register.js')
@@ -41,12 +41,11 @@ app.listen(3000, () => {
 })
 
 app.get('/', homeController)
-app.get('/g', gController)
+app.get('/g', gController, authenticateDriverMiddleware)
 app.get('/g2', redirectIfAuthenticatedMiddleware, g2Controller)
 app.get('/login', loginController)
 app.get('/logout', logoutController)
 
-app.post('/g/fetchData', licenseController)
 app.post('/g2/info', newInfoController)
 app.post('/g/updateData', updateLicenseDataController)
 app.post('/users/register', registerController)

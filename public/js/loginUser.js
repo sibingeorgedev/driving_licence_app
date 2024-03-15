@@ -11,7 +11,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     if (showErrorModal) {
-        document.getElementById("errorMessage").innerText = "Invalid username or password. Please try again.";
+        document.getElementById("errorMessage").innerText = "Invalid Username or Password. Please try again.";
         $('#errorModal').modal('show');
     }
 });

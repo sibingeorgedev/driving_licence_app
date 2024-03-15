@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
             data = await info.findOne({ licenseNumber: req.body.licenseNumber });
         }
         console.log("Data Updated Successfully");
-        res.render('info', { data: data });
+        res.render('g', { data: data });
     }
     catch (error) {
         console.log(error);

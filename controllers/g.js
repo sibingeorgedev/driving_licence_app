@@ -1,3 +1,8 @@
+const info = require('../models/InfoModel.js') // imports Info model
+
 module.exports = async (req, res) => {
-    res.render('g');
+    if (req.session.userId) {
+        data = await info.findOne({ _id: req.session.userId });
+        res.render('g', { data });
+    }
 }

@@ -12,7 +12,7 @@ module.exports = (req, res) => {
                         loggedIn = req.session.userId;
                         console.log('User logged in');
                         if (user.licenseNumber) {
-                            res.render('info', { data: user });
+                            res.render('g', { data: user });
                         }
                         else {
                             res.render('g2', { data: user });
