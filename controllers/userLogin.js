@@ -3,12 +3,13 @@ const info = require('../models/InfoModel') // imports Info model
 
 module.exports = (req, res) => {
     const { username, password } = req.body;
-    info.findOne({ userName: username })
+    info.findOne({ userName: username }) // find the user by their username
         .then(user => {
-            if (user) {
+            if (user) { // if user is found
                 bcrypt.compare(password, user.password, (error, same) => {
                     if (same) { // if passwords match
                         req.session.userId = user._id;
+                        req.session.userType = user.userType;
                         loggedIn = req.session.userId;
                         console.log('User logged in');
                         if (user.licenseNumber) {

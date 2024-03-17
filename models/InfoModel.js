@@ -5,10 +5,10 @@ const bcrypt = require('bcrypt') // imports bcrypt module
 const InfoSchema = new Schema({
     firstName: { type: String, default: '' },
     lastName: { type: String, default: '' },
-    licenseNumber: { type: String, default: '' },
+    licenseNumber: { type: String, default: '', unique: true},
     age: { type: Number, default: 0 }, 
-    userName: { type: String, default: '' },
-    password: { type: String, default: '' },
+    userName: { type: String, default: '', required: true, unique: true},
+    password: { type: String, default: '', required: true},
     userType: { type: String, default: 'Driver' },
     car_details: {
         make: { type: String, default: '' },
