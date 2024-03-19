@@ -17,10 +17,13 @@ const updateLicenseDataController = require('./controllers/updateLicenseData.js'
 const registerController = require('./controllers/register.js')
 const userLoginController = require('./controllers/userLogin.js')
 const logoutController = require('./controllers/logout')
+const appointmentController = require('./controllers/appointment')
+const createAppointmentController = require('./controllers/createAppointment')
+const getAllAppointmentController = require('./controllers/getAllAppointment')
 
 mongoose.connect('mongodb+srv://sibingeorge009:MaryGeorge256@sibincluster.ptohacb.mongodb.net/', { useNewUrlParser: true }); // connects to MongoDB
 
-global.loggedIn = null; // creates a global variable to check if user is logged in
+global.loggedIn = null;
 
 app.set('view engine', 'ejs') // tells Express to use EJS as its view engine
 
@@ -45,8 +48,11 @@ app.get('/g', gController, authenticateDriverMiddleware)
 app.get('/g2', redirectIfAuthenticatedMiddleware, g2Controller)
 app.get('/login', loginController)
 app.get('/logout', logoutController)
+app.get('/appointment', appointmentController)
+app.get('/getAllAppointment', getAllAppointmentController)
 
 app.post('/g2/info', newInfoController)
 app.post('/g/updateData', updateLicenseDataController)
 app.post('/users/register', registerController)
 app.post('/user/login', userLoginController)
+app.post('/appointments/create', createAppointmentController)

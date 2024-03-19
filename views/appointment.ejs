@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('layouts/header'); -%>
+
+    <body>
+        <%- include('layouts/navbar'); -%>
+        <% var date = typeof data !== 'undefined' ? date : ''; %>
+
+            <div class="container mt-5 ">
+                <div class="appointments-section">
+                    <h2>Add Appointment Slots</h2>
+                    <form id="createAppointment">
+                        <label for="date">Date:</label>
+                        <input type="date" id="date" name="date" required><br><br>
+                        <label for="time">Time:</label>
+                        <select id="time" name="time" required>
+                            <option value="" disabled selected>Select a time slot</option>
+                            <% for (let hour = 9; hour <= 16; hour++) { %>
+                                <% for (let minute of ['00', '30']) { %>
+                                    <% const time = hour.toString().padStart(2, '0') + ':' + minute; %>
+                                    <option value="<%= time %>" data-date="<%= date %>"><%= time %></option>
+                                <% } %>
+                            <% } %>
+                        </select><br><br>
+                        <button type="submit">Create Appointment</button>
+                    </form>
+                </div>
+
+                <div class="appointments-section">
+                    <h2>Appointment List</h2>
+                    <ul id="appointments-list">
+                        <!-- appointments will be dynamically added here -->
+                    </ul>
+                </div>
+
+            </div>
+
+            <%- include('layouts/scripts'); -%>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="/js/createAppointment.js"></script>
+    </body>
+
+</html>
