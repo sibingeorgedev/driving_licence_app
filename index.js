@@ -20,6 +20,7 @@ const logoutController = require('./controllers/logout')
 const appointmentController = require('./controllers/appointment')
 const createAppointmentController = require('./controllers/createAppointment')
 const getAllAppointmentController = require('./controllers/getAllAppointment')
+const getAppointmentsByDateController = require('./controllers/getAppointmentsByDate')
 
 mongoose.connect('mongodb+srv://sibingeorge009:MaryGeorge256@sibincluster.ptohacb.mongodb.net/', { useNewUrlParser: true }); // connects to MongoDB
 
@@ -50,6 +51,7 @@ app.get('/login', loginController)
 app.get('/logout', logoutController)
 app.get('/appointment', appointmentController)
 app.get('/getAllAppointment', getAllAppointmentController)
+app.get('/getAppointmentsByDate', getAppointmentsByDateController)
 
 app.post('/g2/info', newInfoController)
 app.post('/g/updateData', updateLicenseDataController)

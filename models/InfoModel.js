@@ -15,7 +15,8 @@ const InfoSchema = new Schema({
         model: { type: String, default: '' },
         year: { type: String, default: '' },
         platNumber: { type: String, default: '' }
-    }
+    },
+    appointmentId: { type: String, default: ''},
 });
 
 InfoSchema.pre('save', function (next) {

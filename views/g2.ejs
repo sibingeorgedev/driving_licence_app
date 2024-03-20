@@ -7,42 +7,63 @@
         <%- include('layouts/navbar'); -%>
             <!-- Page content-->
             <div class="container padding_30">
-                <form action="/g2/info" method="POST">
-                    <section>
-                        <h2>Personal Information</h2>
-                        <label for="firstName">First Name:</label>
-                        <input type="text" id="firstName" name=firstName required>
+                <% var data=typeof data !=='undefined' ? data : {}; %>
+                    <% if (data.licenseNumber) { %>
+                        <form action="/g2/info" method="POST">
+                            <section>
+                                <h2>Personal Information</h2>
+                                <label for="firstName">First Name:</label>
+                                <input type="text" id="firstName" name=firstName required>
 
-                        <label for="lastName">Last Name:</label>
-                        <input type="text" id="lastName" name=lastName required>
+                                <label for="lastName">Last Name:</label>
+                                <input type="text" id="lastName" name=lastName required>
 
-                        <label for="licenseNumber">License Number (8 characters alphanumeric):</label>
-                        <input type="text" id="licenseNumber" name=licenseNumber pattern="[a-zA-Z0-9]{8}" required>
+                                <label for="licenseNumber">License Number (8 characters alphanumeric):</label>
+                                <input type="text" id="licenseNumber" name=licenseNumber pattern="[a-zA-Z0-9]{8}"
+                                    required>
 
-                        <label for="age">Age:</label>
-                        <input type="number" id="age" name=age required>
+                                <label for="age">Age:</label>
+                                <input type="number" id="age" name=age required>
 
-                    </section>
+                            </section>
 
-                    <section>
-                        <h2>Car Information</h2>
-                        <label for="make">Make:</label>
-                        <input type="text" id="make" name=car_details.make required>
+                            <section>
+                                <h2>Car Information</h2>
+                                <label for="make">Make:</label>
+                                <input type="text" id="make" name=car_details.make required>
 
-                        <label for="model">Model:</label>
-                        <input type="text" id="model" name=car_details.model required>
+                                <label for="model">Model:</label>
+                                <input type="text" id="model" name=car_details.model required>
 
-                        <label for="year">Year:</label>
-                        <input type="number" id="year" name=car_details.year required>
+                                <label for="year">Year:</label>
+                                <input type="number" id="year" name=car_details.year required>
 
-                        <label for="platNumber">Plate Number:</label>
-                        <input type="text" id="platNumber" name=car_details.platNumber required>
-                    </section>
+                                <label for="platNumber">Plate Number:</label>
+                                <input type="text" id="platNumber" name=car_details.platNumber required>
+                            </section>
 
-                    <button type="submit" >Submit Request</button>
-                </form>
+                            <button type="submit">Submit Request</button>
+                        </form>
+                    <% } else { %>
+                            <form method="POST">
+                                <section id="appointmentForm">
+                                    <h2>Appointment Selection</h2>
+                                    <label for="appointmentDate">Select Date:</label>
+                                    <input type="date" id="appointmentDate" name="appointmentDate"
+                                        value="getCurrentDate()" required>
+
+                                    <label for="appointmentTime">Select Time:</label>
+                                    <select id="appointmentTime" name="appointmentTime" required>
+                                        <!-- Time options will be dynamically populated here based on selected date -->
+                                    </select>
+                                </section>
+
+                                <button type="submit">Submit Request</button>
+                            </form>
+                    <% } %>
             </div>
             <%- include('layouts/scripts'); -%>
+            <script src="/js/appointmentSelection.js"></script>
     </body>
 
 </html>
