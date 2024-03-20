@@ -26,7 +26,6 @@ async function fetchAppointmentsByDate(selectedDate) {
     }
 }
 
-
 // Function to populate time options based on selected date
 async function updateAppointmentTimes() {
     const selectedDate = document.getElementById('appointmentDate').value;
@@ -35,22 +34,20 @@ async function updateAppointmentTimes() {
 
         const appointmentTimes = appointments.map(appointment => appointment.time);
 
-        const timeSelect = document.getElementById('appointmentTime');
-        timeSelect.innerHTML = '';
+        const timeButtonContainer = document.getElementById('appointmentTimeButtons');
+        timeButtonContainer.innerHTML = '';
 
         if (appointmentTimes.length === 0) {
-            const option = document.createElement('option');
-            option.text = 'No available times for selected date';
-            timeSelect.appendChild(option);
-            timeSelect.disabled = true;
+            const noTimesMessage = document.createElement('p');
+            noTimesMessage.textContent = 'No available times for selected date';
+            timeButtonContainer.appendChild(noTimesMessage);
         } else {
             appointmentTimes.forEach(time => {
-                const option = document.createElement('option');
-                option.value = time;
-                option.text = time;
-                timeSelect.appendChild(option);
+                const timeButton = document.createElement('button');
+                timeButton.classList.add('btn', 'btn-success', 'mx-1', 'my-1');
+                timeButton.textContent = time;
+                timeButtonContainer.appendChild(timeButton);
             });
-            timeSelect.disabled = false;
         }
     } catch (error) {
         console.error('Error fetching appointments:', error);

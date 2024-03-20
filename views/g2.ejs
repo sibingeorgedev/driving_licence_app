@@ -45,21 +45,22 @@
                             <button type="submit">Submit Request</button>
                         </form>
                     <% } else { %>
-                            <form method="POST">
-                                <section id="appointmentForm">
-                                    <h2>Appointment Selection</h2>
-                                    <label for="appointmentDate">Select Date:</label>
-                                    <input type="date" id="appointmentDate" name="appointmentDate"
-                                        value="getCurrentDate()" required>
-
-                                    <label for="appointmentTime">Select Time:</label>
-                                    <select id="appointmentTime" name="appointmentTime" required>
-                                        <!-- Time options will be dynamically populated here based on selected date -->
-                                    </select>
-                                </section>
-
-                                <button type="submit">Submit Request</button>
-                            </form>
+                        <form method="">
+                            <section id="appointmentForm">
+                                <h2>Appointment Selection</h2>
+                                <label for="appointmentDate">Select Date:
+                                <input type="date" id="appointmentDate" name="appointmentDate" value="getCurrentDate()" required>
+                            </label>
+                                <div id="appointmentTimeSelection">
+                                    <label for="appointmentDate">Select Appointment Time:</label>
+                                    <div id="appointmentTimeButtons">
+                                        <!-- Time buttons will be dynamically populated here based on selected date -->
+                                    </div>
+                                </div>
+                            </section>
+                        
+                            <!-- <button type="submit">Submit Request</button> -->
+                        </form>
                     <% } %>
             </div>
             <%- include('layouts/scripts'); -%>
