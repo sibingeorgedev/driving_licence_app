@@ -9,8 +9,8 @@ module.exports = async (req, res) => {
 
     catch (error) {
         console.log(error);
-        const validationErrors = Object.keys(error.errors).map(key => error.errors[key].message)
-        req.flash('validationErrors', validationErrors)
-        req.flash('data', req.body)
+        const validationErrors = Object.keys(error.errors).map(key => error.errors[key].message);
+        req.flash('validationErrors', validationErrors);
+        req.flash('data', req.body);
     }
 }

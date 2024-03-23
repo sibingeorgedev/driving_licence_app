@@ -1,6 +1,9 @@
-module.exports = (req, res, next) => {
+const info = require('../models/InfoModel.js') // imports Info model
+
+module.exports = async (req, res, next) => {
     if (req.session.userId) {
-        return res.render('g2'); // redirects to index page if user is already logged in
+        const data = await info.findOne(req.session.userId);
+        return res.render('g2', { data }); // redirects to index page if user is already logged in
     }
     next()
 }
