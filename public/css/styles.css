@@ -12716,3 +12716,17 @@ p {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
 }
+
+.appointment-confirmation {
+  background-color: #28a745;
+  color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.appointment-confirmation p {
+  font-size: 18px;
+  margin: 0;
+  color: #000;
+}

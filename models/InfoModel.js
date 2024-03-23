@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt') // imports bcrypt module
 const InfoSchema = new Schema({
     firstName: { type: String, default: '' },
     lastName: { type: String, default: '' },
-    licenseNumber: { type: String, default: '', unique: true},
+    licenseNumber: { type: String, default: ''},
     age: { type: Number, default: 0 }, 
     userName: { type: String, default: '', required: true, unique: true},
     password: { type: String, default: '', required: true},

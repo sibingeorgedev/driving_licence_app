@@ -21,6 +21,7 @@ const appointmentController = require('./controllers/getAppointmentPage.js')
 const createAppointmentController = require('./controllers/createAppointment')
 const getAllAppointmentController = require('./controllers/getAllAppointment')
 const getAppointmentsByDateController = require('./controllers/getAppointmentsByDate')
+const bookAppointmentController = require('./controllers/bookAppointment')
 
 mongoose.connect('mongodb+srv://sibingeorge009:MaryGeorge256@sibincluster.ptohacb.mongodb.net/', { useNewUrlParser: true }); // connects to MongoDB
 
@@ -46,7 +47,7 @@ app.listen(3000, () => {
 
 app.get('/', homeController)
 app.get('/g', gController, authenticateDriverMiddleware)
-app.get('/g2', redirectIfAuthenticatedMiddleware, g2Controller)
+app.get('/g2', g2Controller)
 app.get('/login', loginController)
 app.get('/logout', logoutController)
 app.get('/appointment', appointmentController)
@@ -58,3 +59,4 @@ app.post('/g/updateData', updateLicenseDataController)
 app.post('/users/register', registerController)
 app.post('/user/login', userLoginController)
 app.post('/appointments/create', createAppointmentController)
+app.post('/bookAppointment', bookAppointmentController)

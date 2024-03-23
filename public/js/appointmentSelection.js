@@ -1,5 +1,10 @@
-document.addEventListener('DOMContentLoaded', function () {
+let appt = {
+    appointmentDate: '',
+    appointmentTime: ''
+};
+let test = {};
 
+document.addEventListener('DOMContentLoaded', function () {
     updateAppointmentTimes();
 });
 
@@ -12,8 +17,35 @@ function getCurrentDate() {
     return `${year}-${month}-${day}`;
 }
 
-async function fetchAppointmentsByDate(selectedDate) {
+async function bookAppointment(appointment) {
+    const user = {
+        ...data,
+        appointmentId: appointment._id
+    }
 
+    fetch('/bookAppointment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(userDetails => {
+        console.log('User details:', userDetails);
+        // window.location.reload();
+    })
+    .catch(error => {
+        console.error('Error booking appointment:', error);
+    });
+}
+
+async function fetchAppointmentsByDate(selectedDate) {
     try {
         const response = await fetch(`/getAppointmentsByDate?date=${selectedDate}`);
         if (!response.ok) {
@@ -31,8 +63,11 @@ async function updateAppointmentTimes() {
     const selectedDate = document.getElementById('appointmentDate').value;
     try {
         const appointments = await fetchAppointmentsByDate(selectedDate);
+        const test = await fetchAppointmentsByDate(selectedDate);
 
-        const appointmentTimes = appointments.map(appointment => appointment.time);
+        const appointmentTimes = appointments
+            .filter(appointment => appointment.isTimeSlotAvailable)
+            .map(appointment => appointment.time); // only show the slot if the variable isTimeSlotAvailable is true and map the time
 
         const timeButtonContainer = document.getElementById('appointmentTimeButtons');
         timeButtonContainer.innerHTML = '';
@@ -46,6 +81,10 @@ async function updateAppointmentTimes() {
                 const timeButton = document.createElement('button');
                 timeButton.classList.add('btn', 'btn-success', 'mx-1', 'my-1');
                 timeButton.textContent = time;
+                const appointment = appointments.find(x => x.time === time);
+                timeButton.addEventListener('click', () => {
+                    bookAppointment(appointment);
+                });
                 timeButtonContainer.appendChild(timeButton);
             });
         }

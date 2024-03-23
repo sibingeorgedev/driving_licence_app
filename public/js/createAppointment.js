@@ -38,9 +38,12 @@ document.getElementById("createAppointment").addEventListener("submit", function
             document.getElementById('date').value = '';
             document.getElementById('time').value = '';
 
+            fetchAppointments(); // update the appointments list after creating a new appointment
+
             displayAppointments(appointments);
         })
         .catch((error) => {
+            showToast('error', 'Appointment not created successfully');
             console.error('Error:', error);
         });
 });
@@ -152,15 +155,22 @@ function showToast(type, message) {
     toast.setAttribute('role', 'alert');
     toast.setAttribute('aria-live', 'assertive');
     toast.setAttribute('aria-atomic', 'true');
+    toast.style.position = 'fixed'; // Fixed position to keep it at the top right corner
+    toast.style.top = '20px'; // Adjust top position as needed
+    toast.style.right = '20px'; // Adjust right position as needed
+    toast.style.width = '300px'; // Increase the width
+    toast.style.maxWidth = '90%'; // Set a maximum width
 
     const toastBody = document.createElement('div');
     toastBody.classList.add('d-flex');
 
     const toastIcon = document.createElement('i');
     toastIcon.classList.add('bi', type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-circle-fill', 'me-2');
+    toastIcon.style.fontSize = '24px'; // Increase the icon size
 
     const toastMessage = document.createElement('div');
     toastMessage.textContent = message;
+    toastMessage.style.fontSize = '18px'; // Increase the message font size
 
     toastBody.appendChild(toastIcon);
     toastBody.appendChild(toastMessage);
@@ -175,5 +185,5 @@ function showToast(type, message) {
     setTimeout(() => {
         $(toast).toast('dispose');
         document.body.removeChild(toast);
-    }, 3000);
+    }, 4000);
 }
