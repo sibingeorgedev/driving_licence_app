@@ -8,6 +8,7 @@
             <!-- Page content-->
             <div class="container padding_30">
                 <% var data=typeof data !=='undefined' ? data : {}; %>
+                <% var appt=typeof appt !=='undefined' ? appt : {}; %>
                     <% if (!data.licenseNumber) { %>
                         <form action="/g2/info" method="POST">
                             <section>
@@ -46,28 +47,31 @@
                         </form>
                     <% } else if (data.appointmentId) { %>
                         <div class="appointment-confirmation">
-                            <p>Appointment scheduled for <%= data.licenseNumber %> on <%= data.appointmentDate %> at <%= data.appointmentTime %></p>
+                            <p>Appointment scheduled for <%= data.licenseNumber %> on <%= appt.appointmentDate %> at <%= appt.appointmentTime %></p>
                         </div>
                     <% } else { %>
-                        <form method="">
+                        <form>
                             <section id="appointmentForm">
                                 <h2>Appointment Selection</h2>
                                 <label for="appointmentDate">Select Date:
-                                <input type="date" id="appointmentDate" name="appointmentDate" value="getCurrentDate()" required>
-                            </label>
+                                    <input type="date" id="appointmentDate" name="appointmentDate" value="getCurrentDate()" required>
+                                </label>
                                 <div id="appointmentTimeSelection">
                                     <label for="appointmentDate">Select Appointment Time:</label>
                                     <div id="appointmentTimeButtons">
                                         <!-- Time buttons will be dynamically populated here based on selected date -->
                                     </div>
                                 </div>
-                            </section>
+                            </section>ar 
                         </form>
                     <% } %>
             </div>
             <%- include('layouts/scripts'); -%>
             <script>
                 const data = <%- JSON.stringify(data) %>; // pass data from the html to the script
+            </script>
+            <script>
+                var appt = <%- JSON.stringify(appt) %>;
             </script>
             <script src="/js/appointmentSelection.js"></script>
     </body>

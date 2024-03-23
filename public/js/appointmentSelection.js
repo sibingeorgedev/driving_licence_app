@@ -1,48 +1,73 @@
-let appt = {
+appt = {
     appointmentDate: '',
     appointmentTime: ''
 };
-let test = {};
 
 document.addEventListener('DOMContentLoaded', function () {
     updateAppointmentTimes();
 });
 
 // Function to get current date in YYYY-MM-DD format
-function getCurrentDate() {
-    const currentDate = new Date();
+function getCurrentDate(date) {
+    const currentDate = date ? new Date(date) : new Date();
     const year = currentDate.getFullYear();
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     const day = String(currentDate.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
 }
 
-async function bookAppointment(appointment) {
+async function bookAppointment(appointment, time) {
+
+    appt = {
+        appointmentDate: getCurrentDate(appointment.date),
+        appointmentTime: time
+    };
+
     const user = {
         ...data,
         appointmentId: appointment._id
     }
 
-    fetch('/bookAppointment', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
-    })
-    .then(response => {
+    // fetch('/bookAppointment', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(user),
+    // })
+    //     .then(response => {
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+    //         // window.location.reload();
+    //         // return response.json();
+    //     })
+    //     .then(userDetails => {
+    //         console.log('User details:', userDetails);
+    //         // window.location.reload();
+    //     })
+    //     .catch(error => {
+    //         console.error('Error booking appointment:', error);
+    //     });
+
+    try {
+        const response = await fetch('/bookAppointment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user),
+        });
+
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error('Failed to book appointments');
         }
-        return response.json();
-    })
-    .then(userDetails => {
-        console.log('User details:', userDetails);
-        // window.location.reload();
-    })
-    .catch(error => {
-        console.error('Error booking appointment:', error);
-    });
+        const appts = await response.json();
+        console.log('Appointments:', appts);
+    } catch (error) {
+        console.error('Error booking appointments:', error);
+        throw error; // Rethrow the error to propagate it to the caller
+    }
 }
 
 async function fetchAppointmentsByDate(selectedDate) {
@@ -82,8 +107,8 @@ async function updateAppointmentTimes() {
                 timeButton.classList.add('btn', 'btn-success', 'mx-1', 'my-1');
                 timeButton.textContent = time;
                 const appointment = appointments.find(x => x.time === time);
-                timeButton.addEventListener('click', () => {
-                    bookAppointment(appointment);
+                timeButton.addEventListener('click', async () => {
+                    await bookAppointment(appointment, time);
                 });
                 timeButtonContainer.appendChild(timeButton);
             });

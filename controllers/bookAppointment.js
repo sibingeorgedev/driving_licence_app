@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
         await appointment.updateOne({ _id: req.body.appointmentId }, { $set: { isTimeSlotAvailable: false } });
 
         const userData = await info.findOne({ licenseNumber });
-        return res.status(201).json(userData);
+        res.status(201).json(userData);
     } catch (error) {
         console.error('Error booking appointment slot:', error);
         res.status(500).send('Internal Server Error');

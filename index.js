@@ -2,6 +2,7 @@ const express = require('express') // imports express module
 const ejs = require('ejs') // imports ejs module
 const mongoose = require('mongoose') // imports mongoose 
 const expressSession = require('express-session'); // imports express-session module
+const flash = require('connect-flash'); // imports connect-flash module
 
 const app = express() // calls express function to start new Express app
 
@@ -32,6 +33,7 @@ app.set('view engine', 'ejs') // tells Express to use EJS as its view engine
 app.use(express.static('public')) // tells Express to serve static files from the public folder
 app.use(express.json()) // tells Express to parse JSON
 app.use(express.urlencoded()) // tells Express to parse URL-encoded data
+app.use(flash()); // tells Express to use connect-flash
 app.use(expressSession({
   secret: 'keyboard cat'
 })) // tells Express to use express-session
