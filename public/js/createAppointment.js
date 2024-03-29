@@ -1,12 +1,15 @@
 let appointmenteds = [];
 
+// Add event listener to date input to update dropdown options based on selected date
 document.getElementById('date').addEventListener('change', updateDropdownOptions);
 
+// fetch appointments when the page loads
 document.addEventListener('DOMContentLoaded', function () {
     fetchAppointments();
     updateDropdownOptions();
 });
 
+// add event listener to create appointment form to handle form submission
 document.getElementById("createAppointment").addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -33,6 +36,7 @@ document.getElementById("createAppointment").addEventListener("submit", function
         .then(appointments => {
             console.log('Appointment created successfully');
 
+            // Show a success toast message when the appointment is created successfully
             showToast('success', 'Appointment created successfully');
 
             document.getElementById('date').value = '';
@@ -40,7 +44,7 @@ document.getElementById("createAppointment").addEventListener("submit", function
 
             fetchAppointments(); // update the appointments list after creating a new appointment
 
-            displayAppointments(appointments);
+            displayAppointments(appointments); // display the updated appointments list
         })
         .catch((error) => {
             showToast('error', 'Appointment not created successfully');
@@ -48,6 +52,7 @@ document.getElementById("createAppointment").addEventListener("submit", function
         });
 });
 
+// function to fetch appointments from the backend
 function fetchAppointments() {
     fetch('/getAllAppointment')
         .then(response => response.json())
@@ -59,6 +64,7 @@ function fetchAppointments() {
         .catch(error => console.error('Error fetching appointments:', error));
 }
 
+// function to update dropdown options based on selected date
 function updateDropdownOptions() {
     const selectedDate = document.getElementById('date').value;
     const allAppointments = appointmenteds;
@@ -76,6 +82,7 @@ function updateDropdownOptions() {
     });
 }
 
+// function to display appointments in the UI
 function displayAppointments(appointments) {
     // Clear any existing appointments in the UI
     const appointmentsList = document.getElementById('appointments-list');
