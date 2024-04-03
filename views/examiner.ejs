@@ -8,36 +8,44 @@
     <body>
         <%- include('layouts/navbar'); -%>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Driver</th>
-                        <th>Test Type</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                    </tr>
-                </thead>
-                <tbody id="appointmentsTableBody">
-                    <!-- Table rows will be dynamically populated here -->
-                </tbody>
-            </table>
-
-            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Appointment Details</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" id="modalBody">
-                            <!-- Appointment details will be displayed here -->
-                        </div>
-                        <div class="modal-footer" id="modalFooter">
-                            <!-- Footer content will be dynamically populated here -->
-                        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Driver</th>
+                    <th>Test Type 
+                        <span id="filterContainer">
+                            <select id="testTypeFilter">
+                                <option value="">All</option>
+                                <option value="G">G</option>
+                                <option value="G2">G2</option>
+                            </select>
+                        </span>
+                    </th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody id="appointmentsTableBody">
+                <!-- Table rows will be dynamically populated here -->
+            </tbody>
+        </table>
+        
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Appointment Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="modalBody">
+                        <!-- Appointment details will be displayed here -->
+                    </div>
+                    <div class="modal-footer" id="modalFooter">
+                        <!-- Footer content will be dynamically populated here -->
                     </div>
                 </div>
             </div>
+        </div>
 
 
             <%- include('layouts/scripts'); -%>

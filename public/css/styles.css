@@ -12802,3 +12802,7 @@ tr:nth-child(even) {
   pointer-events: none;
   cursor: default;
 }
+
+#filterContainer {
+  float: right;
+}

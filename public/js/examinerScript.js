@@ -1,8 +1,11 @@
+let appointments = [];
+
 // Function to fetch all appointments and users
 function getAllAppointmentsAndUsers() {
     fetch('/getAllUserAndAppointments')
         .then(response => response.json())
         .then(data => {
+            appointments = data;
             displayAppointments(data);
         })
         .catch(error => console.error('Error fetching appointments:', error));
@@ -58,11 +61,10 @@ function getCurrentDate(date) {
 }
 
 // Function to open modal with appointment details
-// Function to open modal with appointment details
 function openModal(appointment) {
     // Get the modal element
     const modal = document.getElementById('myModal');
-    
+
     // Get the modal body element
     const modalBody = document.getElementById('modalBody');
 
@@ -109,7 +111,7 @@ function openModal(appointment) {
     editButton.classList.add('btn', 'btn-primary');
     editButton.textContent = 'Edit Test Data';
     editButton.addEventListener('click', () => openEditModal(appointment));
-    
+
     // Add the edit button to the modal footer
     const modalFooter = document.getElementById('modalFooter');
     modalFooter.innerHTML = '';
@@ -183,13 +185,13 @@ function openEditModal(appointment) {
     saveButton.classList.add('btn', 'btn-primary');
     saveButton.textContent = 'Save Changes';
     saveButton.addEventListener('click', () => saveChanges(appointment));
-    
+
     const cancelButton = document.createElement('button');
     cancelButton.type = 'button';
     cancelButton.classList.add('btn', 'btn-secondary');
     cancelButton.textContent = 'Cancel';
     cancelButton.addEventListener('click', () => openModal(appointment));
-    
+
     // Add the save and cancel buttons to the modal footer
     const modalFooter = document.getElementById('modalFooter');
     modalFooter.innerHTML = '';
@@ -234,6 +236,13 @@ function saveChanges(appointment) {
         });
     $('#myModal').modal('hide');
 }
+
+const testTypeFilter = document.getElementById('testTypeFilter');
+testTypeFilter.addEventListener('change', () => {
+    const selectedTestType = testTypeFilter.value;
+    const filteredAppointments = selectedTestType === "" ? appointments : appointments.filter(appointment => appointment.userData.appointmentDetails.testType === selectedTestType);
+    displayAppointments(filteredAppointments);
+});
 
 // Call the function to fetch appointments when the page loads
 getAllAppointmentsAndUsers();

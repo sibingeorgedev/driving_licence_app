@@ -1,8 +1,11 @@
+let appointments = [];
+
 // Function to fetch all appointments and users
 function getAllAppointmentsAndUsers() {
     fetch('/getAllUserAndAppointments')
         .then(response => response.json())
         .then(data => {
+            appointments = data;
             displayAppointments(data);
         })
         .catch(error => console.error('Error fetching appointments:', error));
@@ -102,5 +105,12 @@ function grayedOutButton(button) {
     button.disabled = true; // Disable the button for pending status
     button.classList.add('grayed-out-button'); // Add the grayed-out-button class
 }
+
+const testTypeFilter = document.getElementById('testTypeFilter');
+testTypeFilter.addEventListener('change', () => {
+    const selectedTestType = testTypeFilter.value;
+    const filteredAppointments = selectedTestType === "" ? appointments : appointments.filter(appointment => appointment.userData.appointmentDetails.testType === selectedTestType);
+    displayAppointments(filteredAppointments);
+});
 
 getAllAppointmentsAndUsers();
