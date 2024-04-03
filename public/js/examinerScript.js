@@ -15,8 +15,10 @@ function displayAppointments(data) {
     // Clear existing table rows
     tableBody.innerHTML = '';
 
+    const bookedAppointments = data.filter(appointment => appointment.appointments);
+
     // Iterate over the data and create table rows
-    data.forEach(appointment => {
+    bookedAppointments.forEach(appointment => {
         const row = document.createElement('tr');
 
         // Populate table cells with appointment data

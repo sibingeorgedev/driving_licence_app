@@ -44,7 +44,7 @@ function displayAppointments(data) {
                 grayedOutButton(button); // Gray out the button if admin has approved
             } else {
                 button.textContent = 'Retake Test';
-                button.addEventListener('click', () => handleRetakeTest(appointment));
+                button.addEventListener('click', () => handleButtonAction(appointment));
             }
         } else if (status === 'Passed') {
             if (appointment.userData.appointmentDetails.adminApproved) { 
@@ -52,7 +52,7 @@ function displayAppointments(data) {
                 grayedOutButton(button); // Gray out the button if admin has approved
             } else {
                 button.textContent = 'Issue License';
-                button.addEventListener('click', () => handleIssueLicense(appointment));
+                button.addEventListener('click', () => handleButtonAction(appointment));
             }
         } else {
             button.textContent = 'Pending';
@@ -67,7 +67,7 @@ function displayAppointments(data) {
     });
 }
 
-function handleRetakeTest(appointment) {
+function handleButtonAction(appointment) {
 
     const updateUserData = {
         ...appointment.userData,
@@ -77,36 +77,6 @@ function handleRetakeTest(appointment) {
         }
     };
 
-    fetch('/updateTestDetails', { // fetch request to book appointment
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updateUserData),
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(userDetails => {
-            getAllAppointmentsAndUsers();
-        })
-        .catch(error => {
-            console.error('Error booking appointment:', error);
-        });
-}
-
-function handleIssueLicense(appointment) {
-
-    const updateUserData = {
-        ...appointment.userData,
-        appointmentDetails: {
-            ...appointment.userData.appointmentDetails,
-            adminApproved: true
-        }
-    };
     fetch('/updateTestDetails', { // fetch request to book appointment
         method: 'POST',
         headers: {
