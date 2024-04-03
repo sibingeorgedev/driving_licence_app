@@ -22,7 +22,10 @@ const appointmentController = require('./controllers/getAppointmentPage.js');
 const createAppointmentController = require('./controllers/createAppointment');
 const getAllAppointmentController = require('./controllers/getAllAppointment');
 const getAppointmentsByDateController = require('./controllers/getAppointmentsByDate');
-const bookAppointmentController = require('./controllers/bookAppointment');
+const bookG2AppointmentController = require('./controllers/bookG2Appointment.js');
+const examinerController = require('./controllers/getExaminerPage.js');
+const bookGAppointmentController = require('./controllers/bookGAppointment.js');
+const getAllUserAndAppointmentsController = require('./controllers/getAllUserAndAppointments.js');
 
 mongoose.connect('mongodb+srv://sibingeorge009:MaryGeorge256@sibincluster.ptohacb.mongodb.net/', { useNewUrlParser: true }); // connects to MongoDB
 
@@ -53,12 +56,15 @@ app.get('/g2', g2Controller, redirectIfAuthenticatedMiddleware);
 app.get('/login', loginController);
 app.get('/logout', logoutController);
 app.get('/appointment', appointmentController);
+app.get('/examiner', examinerController);
 app.get('/getAllAppointment', getAllAppointmentController);
 app.get('/getAppointmentsByDate', getAppointmentsByDateController);
+app.get('/getAllUserAndAppointments', getAllUserAndAppointmentsController);
 
 app.post('/g2/info', newInfoController);
 app.post('/g/updateData', updateLicenseDataController);
 app.post('/users/register', registerController);
 app.post('/user/login', userLoginController);
 app.post('/appointments/create', createAppointmentController);
-app.post('/bookAppointment', bookAppointmentController);
+app.post('/bookG2Appointment', bookG2AppointmentController);
+app.post('/bookGAppointment', bookGAppointmentController);

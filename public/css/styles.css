@@ -12730,3 +12730,73 @@ p {
   margin: 0;
   color: #000;
 }
+
+/* examiner.css */
+
+/* Center the table on the screen */
+table {
+  margin: 100px auto; /* Center horizontally */
+  width: 80%; /* Set table width */
+  border-collapse: collapse; /* Collapse table borders */
+}
+
+/* Style table header */
+th {
+  background-color: #f2f2f2; /* Light gray background */
+  border: 1px solid #ddd; /* Gray border */
+  padding: 8px; /* Add padding */
+  text-align: left; /* Align text to the left */
+}
+
+/* Style table cells */
+td {
+  border: 1px solid #ddd; /* Gray border */
+  padding: 8px; /* Add padding */
+}
+
+/* Style alternate rows */
+tr:nth-child(even) {
+  background-color: #f2f2f2; /* Light gray background for even rows */
+}
+
+
+/* examiner.css */
+
+/* Modal styles */
+.modal {
+  display: none; /* Hide modal by default */
+  position: fixed; /* Position modal */
+  z-index: 1; /* Set z-index */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if content exceeds viewport */
+  background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+}
+
+/* Modal content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto; /* Center modal vertically and horizontally */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px; /* Set maximum width for modal */
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+

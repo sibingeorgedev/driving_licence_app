@@ -2,6 +2,12 @@ let originalValues = {};
 const cancelButton = document.querySelector('button[onclick="cancelEditMode()"]');
 cancelButton.style.display = 'none'; // initially hide the cancel button
 
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.location.href != 'http://localhost:3000/g') {
+    window.location.href = '/g'; 
+  }
+});
+
 function enableEditMode() {
   originalValues = data.car_details; // store the original values of the fields in case the user cancels the edit mode
 

@@ -1,4 +1,4 @@
-const appointment = require('../models/AppointmentModel');
+const appointment = require('../models/AppointmentModel.js');
 const info = require('../models/InfoModel.js') // imports Info model
 
 module.exports = async (req, res) => {
@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
         // update the user's appointment details
         await info.updateOne({ licenseNumber }, req.body);
         // update the appointment slot to be unavailable
-        await appointment.updateOne({ _id: req.body.appointmentId }, { $set: { isTimeSlotAvailable: false } });
+        await appointment.updateOne({ _id: req.body.appointmentId }, { $set: { isTimeSlotAvailable: false, testType: "G2" } });
 
         // fetch the updated user data and send it in the response
         const userData = await info.findOne({ licenseNumber });

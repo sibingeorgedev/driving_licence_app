@@ -46,25 +46,57 @@
                                 <button type="submit">Submit Request</button>
                             </form>
                         <% } else if (data.appointmentId) { %>
-                                <div class="appointment-confirmation">
-                                    <% const appointmentDate=new Date(data.appointment.date); %>
-                                        <% const options={ month: 'long' , day: 'numeric' , weekday: 'long' }; %>
-                                            <p>Appointment has been scheduled for the user:
-                                                <strong>
-                                                    <%= data.firstName %> <%= data.lastName %>
-                                                </strong>
-                                                with licenseNumber: 
-                                                <strong>
-                                                    <%= data.licenseNumber %>
-                                                </strong> on "
-                                                <strong>
-                                                    <%= appointmentDate.toLocaleDateString('en-US', options) %>
-                                                </strong>" at "
-                                                <strong>
-                                                    <%= data.appointment.time %>
-                                                </strong>".
-                                            </p>
-                                </div>
+                                <% const appointmentDate=new Date(data.appointment.date); %>
+                                <% const options={ month: 'long' , day: 'numeric' , weekday: 'long' }; %>
+                                <div id="fetchedDataContainer" class="styled-container">
+                                    <h2 class="section-title">Appointment Confirmation</h2>
+                                    <section class="info-section">
+                                        <div class="info-item">
+                                            <label>Test Type:</label>
+                                            <span class="info-value">
+                                                <%= data.appointmentDetails.testType %>
+                                            </span>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Date:</label>
+                                            <span class="info-value">
+                                                <%= appointmentDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) %>
+                                            </span>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Time:</label>
+                                            <span class="info-value">
+                                                <%= data.appointment.time %>
+                                            </span>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Status:</label>
+                                            <span class="info-value">
+                                                <%= data.appointmentDetails.status %>
+                                            </span>
+                                        </div>
+                                        <% if (data.appointmentDetails.comments) { %>
+                                        <div class="info-item">
+                                            <label>Comments (from examiner):</label>
+                                            <span class="info-value">
+                                                <%= data.appointmentDetails.comments %>
+                                            </span>
+                                        </div>
+                                        <% } %>
+                                        <div class="info-item">
+                                            <label>Action Required:</label>
+                                            <span class="info-value">
+                                                <% if (data.appointmentDetails.status === 'Passed') { %>
+                                                    Your license has been generated.
+                                                <% } else if (data.appointmentDetails.status === 'Failed') { %>
+                                                    You need to re-take your G2/G test. Please wait for further instructions.
+                                                <% } else { %>
+                                                    Appointment evaluation is pending. Please wait for further instructions.
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </section>
+                                </div>                                                           
                         <% } else { %>
                                     <form>
                                         <section id="appointmentForm">

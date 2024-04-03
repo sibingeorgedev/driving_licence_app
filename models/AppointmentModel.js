@@ -14,6 +14,10 @@ const AppointmentSchema = new Schema({
         type: Boolean,
         default: true,
         required: true
+    },
+    testType: {
+        type: String,
+        default: '',
     }
 });
 

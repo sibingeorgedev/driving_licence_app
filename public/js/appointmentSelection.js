@@ -15,14 +15,56 @@ function getCurrentDate(date) {
 }
 
 // function to book an appointment slot
-function bookAppointment(appointment) {
+function bookG2Appointment(appointment) {
 
     const user = {
         ...data,
-        appointmentId: appointment._id
+        appointmentId: appointment._id,
+        appointmentDetails: {
+            appointmentId: appointment._id,
+            testType: "G2",
+            status: 'Pending',
+            comments: '',
+        },
     }
 
-    fetch('/bookAppointment', { // fetch request to book appointment
+    fetch('/bookG2Appointment', { // fetch request to book appointment
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(userDetails => {
+            window.location.reload(); // reload the page after booking appointment
+        })
+        .catch(error => {
+            console.error('Error booking appointment:', error);
+        });
+}
+
+// function to book an appointment slot
+function bookGAppointment(appointment) {
+
+    const user = {
+        ...data,
+        appointmentId: appointment._id,
+        appointmentDetails: {
+            appointmentId: appointment._id,
+            testType: "G",
+            status: 'Pending',
+            comments: '',
+        },
+    }
+    console.log(user);
+
+    fetch('/bookGAppointment', { // fetch request to book appointment
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -84,7 +126,13 @@ async function updateAppointmentTimes() {
                 const appointment = appointments.find(x => x.time === time);
                 timeButton.addEventListener('click', event => {
                     event.preventDefault();
-                    bookAppointment(appointment);
+                    const currentPage = window.location.pathname;
+                    if (currentPage === '/g') {
+                        bookGAppointment(appointment);
+                    } else {
+                        bookG2Appointment(appointment);
+                    }
+
                 });
                 timeButtonContainer.appendChild(timeButton);
             });

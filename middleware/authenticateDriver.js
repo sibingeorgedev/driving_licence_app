@@ -8,6 +8,8 @@ module.exports = async (req, res, next) => {
     } else if (userData.userType === "Admin") { 
         console.log("User is an admin");
         return res.render('appointment'); // render the appointment view
+    } else if (userData.userType === "Examiner") {
+        return res.render('examiner'); // render the appointment view
     }
     next()
 } 

@@ -81,16 +81,85 @@
                             <button onclick="enableEditMode()">Edit</button>
                             <button onclick="cancelEditMode()">Cancel</button>
                         </section>
-                        <% } else { %>
+                            <% if (!data.appointmentId) { %>
+                                <section id="appointmentForm">
+                                    <h2>Book G Test Appointment</h2>
+                                    <label for="appointmentDate">Select Date:</label>
+                                    <input type="date" id="appointmentDate" name="appointmentDate" required>
+                                    <div id="appointmentTimeSelection">
+                                        <label for="appointmentDate">Select Appointment Time:</label>
+                                        <div id="appointmentTimeButtons">
+                                            <!-- Time buttons will be dynamically populated here based on selected date -->
+                                        </div>
+                                    </div>
+                                </section>
+                            <% } %>
+
+                            <% if (data.appointmentId && data.appointmentDetails.testType === "G") { %>
+                                <% const gAppointmentDate=new Date(data.appointment.date); %>
+                                <% const options={ month: 'long' , day: 'numeric' , weekday: 'long' }; %>
+                                <div id="fetchedDataContainer" class="styled-container">
+                                    <section class="info-section">
+                                        <h3 style="margin-bottom: 30px;">G test Appointment Details :</h3>
+                                        <div class="info-item">
+                                            <label>Test Type:</label>
+                                            <span class="info-value">
+                                                <%= data.appointmentDetails.testType %>
+                                            </span>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Date:</label>
+                                            <span class="info-value">
+                                                <%= gAppointmentDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) %>
+                                            </span>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Time:</label>
+                                            <span class="info-value">
+                                                <%= data.appointment.time %>
+                                            </span>
+                                        </div>
+                                        <div class="info-item">
+                                            <label>Status:</label>
+                                            <span class="info-value">
+                                                <%= data.appointmentDetails.status %>
+                                            </span>
+                                        </div>
+                                        <% if (data.appointmentDetails.comments) { %>
+                                        <div class="info-item">
+                                            <label>Comments (from examiner):</label>
+                                            <span class="info-value">
+                                                <%= data.appointmentDetails.comments %>
+                                            </span>
+                                        </div>
+                                        <% } %>
+                                        <div class="info-item">
+                                            <label>Action Required:</label>
+                                            <span class="info-value">
+                                                <% if (data.appointmentDetails.status === 'Passed') { %>
+                                                    Your license has been generated.
+                                                <% } else if (data.appointmentDetails.status === 'Failed') { %>
+                                                    You need to re-take your G2/G test. Please wait for further instructions.
+                                                <% } else { %>
+                                                    Appointment evaluation is pending. Please wait for further instructions.
+                                                <% } %>
+                                            </span>
+                                        </div>
+                                    </section>
+                                </div>    
+                            <% } %>
+
+                    <% } else { %>
                             <p>No User Found</p>
                             <a href="/g2">Go back to G2 page</a>
-                        <% } %>
+                    <% } %>
                 </div>
             </div>
 
             <script>
                 const data = <%- JSON.stringify(data) %>; // pass data from the html to the script
             </script>
+            <script src="/js/appointmentSelection.js"></script>
             <script src="/js/info.js"></script>
     </body>
 

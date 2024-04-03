@@ -13,10 +13,12 @@ module.exports = (req, res) => {
                         loggedIn = req.session.userId;
                         console.log('User logged in');
                         if (user.licenseNumber) { // if user has a license number render the g view
-                            res.render('g', { data: user }); 
+                            res.render('g', { data: user });
                         }
                         else if (user.userType === "Admin") { // if user is an admin render the appointment view
                             res.render('appointment', { data: user });
+                        } else if (user.userType === "Examiner") {
+                            return res.render('examiner', { data: user }); // render the examiner view
                         }
                         else { // if user is not an admin or does not have a licenseNumber, the cosider it as his first login and render the g2 view
                             res.render('g2', { data: user });
