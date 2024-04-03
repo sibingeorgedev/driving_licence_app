@@ -77,8 +77,8 @@ function openModal(appointment) {
         { label: 'Driver', value: appointmentData.firstName + ' ' + appointmentData.lastName },
         { label: 'Car Make', value: appointmentData.car_details.make },
         { label: 'Car Plate', value: appointmentData.car_details.platNumber },
-        { label: 'Test Comments', value: appointmentData.appointmentDetails.comments },
         { label: 'Test Status', value: appointmentData.appointmentDetails.status },
+        { label: 'Test Comments', value: appointmentData.appointmentDetails.comments }
     ];
 
     infoItems.forEach(item => {
@@ -105,7 +105,7 @@ function openModal(appointment) {
     const editButton = document.createElement('button');
     editButton.type = 'button';
     editButton.classList.add('btn', 'btn-primary');
-    editButton.textContent = 'Edit';
+    editButton.textContent = 'Edit Test Data';
     editButton.addEventListener('click', () => openEditModal(appointment));
     
     // Add the edit button to the modal footer
@@ -132,8 +132,8 @@ function openEditModal(appointment) {
     // Create and populate input fields for comments and status
     const appointmentData = appointment.userData.appointmentDetails;
     const fields = [
-        { label: 'Comments', name: 'comments', value: appointmentData.comments },
         { label: 'Status', name: 'status', value: appointmentData.status },
+        { label: 'Comments', name: 'comments', value: appointmentData.comments }
     ];
 
     fields.forEach(field => {
@@ -144,12 +144,30 @@ function openEditModal(appointment) {
         label.textContent = field.label + ':';
         formGroup.appendChild(label);
 
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.classList.add('form-control');
-        input.name = field.name;
-        input.value = field.value;
-        formGroup.appendChild(input);
+        if (field.name === 'status') {
+            const select = document.createElement('select');
+            select.classList.add('form-control');
+            select.name = field.name;
+
+            const options = ['Pending', 'Failed', 'Passed'];
+            options.forEach(optionValue => {
+                const option = document.createElement('option');
+                option.value = option.textContent = optionValue;
+                if (optionValue === field.value) {
+                    option.selected = true; // Select the default value
+                }
+                select.appendChild(option);
+            });
+
+            formGroup.appendChild(select);
+        } else {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.classList.add('form-control');
+            input.name = field.name;
+            input.value = field.value;
+            formGroup.appendChild(input);
+        }
 
         editForm.appendChild(formGroup);
     });
@@ -162,7 +180,7 @@ function openEditModal(appointment) {
     saveButton.type = 'button';
     saveButton.classList.add('btn', 'btn-primary');
     saveButton.textContent = 'Save Changes';
-    saveButton.addEventListener('click', saveChanges);
+    saveButton.addEventListener('click', () => saveChanges(appointment));
     
     const cancelButton = document.createElement('button');
     cancelButton.type = 'button';
@@ -178,17 +196,40 @@ function openEditModal(appointment) {
 }
 
 // Function to handle saving changes
-function saveChanges() {
+function saveChanges(appointment) {
     const editForm = document.getElementById('editForm');
     const formData = new FormData(editForm);
     const comments = formData.get('comments');
     const status = formData.get('status');
 
-    // Here, you can send an AJAX request to save the changes to the server
-    // Example:
-    // fetch('/updateAppointment', {
-    //     method: 'POST',
-    //     body: JSON.stringify({ appointmentId: appointmentId,
+    const updateUserData = {
+        ...appointment.userData,
+        appointmentDetails: {
+            ...appointment.userData.appointmentDetails,
+            comments,
+            status,
+        },
+    };
+
+    fetch('/updateTestDetails', { // fetch request to book appointment
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updateUserData),
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(userDetails => {
+            getAllAppointmentsAndUsers();
+        })
+        .catch(error => {
+            console.error('Error booking appointment:', error);
+        });
     $('#myModal').modal('hide');
 }
 

@@ -12731,61 +12731,53 @@ p {
   color: #000;
 }
 
-/* examiner.css */
-
-/* Center the table on the screen */
 table {
-  margin: 100px auto; /* Center horizontally */
-  width: 80%; /* Set table width */
-  border-collapse: collapse; /* Collapse table borders */
+  margin: 100px auto;
+  width: 80%;
+  border-collapse: collapse;
 }
 
-/* Style table header */
 th {
-  background-color: #f2f2f2; /* Light gray background */
-  border: 1px solid #ddd; /* Gray border */
-  padding: 8px; /* Add padding */
-  text-align: left; /* Align text to the left */
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
 }
 
-/* Style table cells */
 td {
-  border: 1px solid #ddd; /* Gray border */
-  padding: 8px; /* Add padding */
+  border: 1px solid #ddd;
+  padding: 8px;
 }
 
-/* Style alternate rows */
 tr:nth-child(even) {
-  background-color: #f2f2f2; /* Light gray background for even rows */
+  background-color: #f2f2f2;
 }
 
+#appointmentsTableBody tr {
+  cursor: pointer;
+}
 
-/* examiner.css */
-
-/* Modal styles */
 .modal {
-  display: none; /* Hide modal by default */
-  position: fixed; /* Position modal */
-  z-index: 1; /* Set z-index */
+  display: none;
+  position: fixed;
+  z-index: 1;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if content exceeds viewport */
-  background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
-/* Modal content */
 .modal-content {
   background-color: #fefefe;
-  margin: 10% auto; /* Center modal vertically and horizontally */
+  margin: 10% auto;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-  max-width: 600px; /* Set maximum width for modal */
+  max-width: 600px;
 }
 
-/* Close button */
 .close {
   color: #aaa;
   float: right;
@@ -12800,3 +12792,13 @@ tr:nth-child(even) {
   cursor: pointer;
 }
 
+.grayed-out-button {
+  background-color: grey;
+  color: white;
+}
+
+.grayed-out-button:hover {
+  background-color: grey;
+  pointer-events: none;
+  cursor: default;
+}

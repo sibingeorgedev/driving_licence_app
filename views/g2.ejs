@@ -69,26 +69,39 @@
                                                 <%= data.appointment.time %>
                                             </span>
                                         </div>
-                                        <div class="info-item">
-                                            <label>Status:</label>
-                                            <span class="info-value">
-                                                <%= data.appointmentDetails.status %>
-                                            </span>
-                                        </div>
+                                        <% if (data.appointmentDetails.status) { %>
+                                            <div class="info-item">
+                                                <label>Status:</label>
+                                                <% if (data.appointmentDetails.adminApproved) { %>
+                                                    <span class="info-value">
+                                                        <%= data.appointmentDetails.status %>
+                                                    </span>
+                                                <% } else { %>
+                                                    <span class="info-value">
+                                                        Pending
+                                                    </span>
+                                                <% } %>
+                                            </div>
+                                        <% } %>
                                         <% if (data.appointmentDetails.comments) { %>
-                                        <div class="info-item">
-                                            <label>Comments (from examiner):</label>
-                                            <span class="info-value">
-                                                <%= data.appointmentDetails.comments %>
-                                            </span>
-                                        </div>
+                                            <div class="info-item">
+                                                <label>Comments (from examiner):</label>
+                                                <% if (data.appointmentDetails.adminApproved) { %>
+                                                    <span class="info-value">
+                                                        <%= data.appointmentDetails.comments %>
+                                                    </span>
+                                                <% } else { %>
+                                                    <span class="info-value">
+                                                    </span>
+                                                <% } %>
+                                            </div>
                                         <% } %>
                                         <div class="info-item">
                                             <label>Action Required:</label>
                                             <span class="info-value">
-                                                <% if (data.appointmentDetails.status === 'Passed') { %>
+                                                <% if (data.appointmentDetails.status === 'Passed' && data.appointmentDetails.adminApproved) { %>
                                                     Your license has been generated.
-                                                <% } else if (data.appointmentDetails.status === 'Failed') { %>
+                                                <% } else if (data.appointmentDetails.status === 'Failed' && data.appointmentDetails.adminApproved) { %>
                                                     You need to re-take your G2/G test. Please wait for further instructions.
                                                 <% } else { %>
                                                     Appointment evaluation is pending. Please wait for further instructions.

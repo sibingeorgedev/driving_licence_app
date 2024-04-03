@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('layouts/header'); -%>
+
+    <body>
+        <%- include('layouts/navbar'); -%>
+        <% var date = typeof data !== 'undefined' ? date : ''; %>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Driver</th>
+                    <th>Test Type</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="appointmentsTableBody">
+                <!-- Table rows will be dynamically populated here -->
+            </tbody>
+        </table>
+
+        <%- include('layouts/scripts'); -%>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="/js/adminScript.js"></script>
+    </body>
+
+</html>

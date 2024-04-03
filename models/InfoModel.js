@@ -21,7 +21,8 @@ const InfoSchema = new Schema({
         appointmentId: { type: String, default: ''},
         testType: { type: String, default: ''},
         status: { type: String, default: 'Pending'},
-        comments: { type: String, default: ''}
+        comments: { type: String, default: ''},
+        adminApproved: { type: Boolean, default: false}
     }
 });
 

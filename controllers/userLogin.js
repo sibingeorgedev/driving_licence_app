@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const info = require('../models/InfoModel') // imports Info model
+const appointment = require('../models/AppointmentModel'); // imports Appointment model
 
 module.exports = (req, res) => {
     const { username, password } = req.body;
@@ -13,7 +14,18 @@ module.exports = (req, res) => {
                         loggedIn = req.session.userId;
                         console.log('User logged in');
                         if (user.licenseNumber) { // if user has a license number render the g view
-                            res.render('g', { data: user });
+                            if (user.appointmentId) {
+                                appointment.findOne({ _id: user.appointmentId })
+                                    .then(userAppointment => {
+                                        const userDetails = {
+                                            ...user.toObject(),
+                                            appointment: userAppointment
+                                        };
+                                        res.render('g', { data: userDetails });
+                                    });
+                            } else {
+                                res.render('g', { data: user });
+                            }
                         }
                         else if (user.userType === "Admin") { // if user is an admin render the appointment view
                             res.render('appointment', { data: user });
