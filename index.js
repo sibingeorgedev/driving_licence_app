@@ -6,8 +6,10 @@ const flash = require('connect-flash'); // imports connect-flash module
 
 const app = express(); // calls express function to start new Express app
 
+const authenticateLoggedInMiddleware = require('./middleware/authenticateLogin.js');
 const authenticateDriverMiddleware = require('./middleware/authenticateDriver.js');
-const redirectIfAuthenticatedMiddleware = require('./middleware/redirectIfAuthenticatedMiddleware');
+const authenticateAdminMiddleware = require('./middleware/authenicateAdmin.js');
+const authenticateExaminerMiddleware = require('./middleware/authenicateExaminer.js');
 
 const homeController = require('./controllers/getHomePage.js');
 const gController = require('./controllers/getGPage.js');
@@ -53,13 +55,13 @@ app.listen(3000, () => {
 });
 
 app.get('/', homeController);
-app.get('/g', gController, authenticateDriverMiddleware);
-app.get('/g2', g2Controller, redirectIfAuthenticatedMiddleware);
 app.get('/login', loginController);
 app.get('/logout', logoutController);
-app.get('/appointment', appointmentController);
-app.get('/examiner', examinerController);
-app.get('/admin', adminController);
+app.get('/g', authenticateLoggedInMiddleware, authenticateDriverMiddleware, gController);
+app.get('/g2', authenticateLoggedInMiddleware, authenticateDriverMiddleware, g2Controller);
+app.get('/admin', authenticateLoggedInMiddleware, authenticateAdminMiddleware, adminController);
+app.get('/appointment', authenticateLoggedInMiddleware, authenticateAdminMiddleware, appointmentController);
+app.get('/examiner', authenticateLoggedInMiddleware, authenticateExaminerMiddleware, examinerController);
 app.get('/getAllAppointment', getAllAppointmentController);
 app.get('/getAppointmentsByDate', getAppointmentsByDateController);
 app.get('/getAllUserAndAppointments', getAllUserAndAppointmentsController);
