@@ -113,4 +113,11 @@ testTypeFilter.addEventListener('change', () => {
     displayAppointments(filteredAppointments);
 });
 
+const statusTypeFilter = document.getElementById('statusTypeFilter');
+statusTypeFilter.addEventListener('change', () => {
+    const selectedStatusTestType = statusTypeFilter.value;
+    const filteredAppointments = selectedStatusTestType === "" ? appointments : appointments.filter(appointment => appointment.userData.appointmentDetails.status === selectedStatusTestType);
+    displayAppointments(filteredAppointments);
+});
+
 getAllAppointmentsAndUsers();

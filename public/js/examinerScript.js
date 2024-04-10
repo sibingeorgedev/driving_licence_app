@@ -33,6 +33,10 @@ function displayAppointments(data) {
         testTypeCell.textContent = appointment.userData.appointmentDetails.testType;
         row.appendChild(testTypeCell);
 
+        const statusCell = document.createElement('td');
+        statusCell.textContent = appointment.userData.appointmentDetails.status;
+        row.appendChild(statusCell);
+
         const dateCell = document.createElement('td');
         dateCell.textContent = getCurrentDate(appointment.appointments.date);
         row.appendChild(dateCell);
@@ -241,6 +245,13 @@ const testTypeFilter = document.getElementById('testTypeFilter');
 testTypeFilter.addEventListener('change', () => {
     const selectedTestType = testTypeFilter.value;
     const filteredAppointments = selectedTestType === "" ? appointments : appointments.filter(appointment => appointment.userData.appointmentDetails.testType === selectedTestType);
+    displayAppointments(filteredAppointments);
+});
+
+const statusTypeFilter = document.getElementById('statusTypeFilter');
+statusTypeFilter.addEventListener('change', () => {
+    const selectedStatusTestType = statusTypeFilter.value;
+    const filteredAppointments = selectedStatusTestType === "" ? appointments : appointments.filter(appointment => appointment.userData.appointmentDetails.status === selectedStatusTestType);
     displayAppointments(filteredAppointments);
 });
 
